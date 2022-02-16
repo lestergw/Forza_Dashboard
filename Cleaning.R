@@ -72,9 +72,12 @@ forza$Weight_lbs = as.numeric(gsub(",", "", forza$Weight_lbs))
 forza$year = as.factor(forza$year)
 
 ## model_make
-## keep as a character for now, extract make later if needed
+forza$make = word(forza$model_make, 1)
+forza$model = sub('^\\w+\\s', '', forza$model_make)
+forza %<>%
+  select(-model_make)
 
 # Write the clean data set to a new csv
-write.csv(forza, "Clean_Forza.csv")
+saveRDS(forza, "Clean_Forza.rds")
 
 
